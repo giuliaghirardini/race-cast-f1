@@ -209,4 +209,4 @@ __marimo__/
 # Fast F1
 __cache_folder/
 *.ff1pkl
-*.squite
+*.sqlite
