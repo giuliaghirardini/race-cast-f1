@@ -10,7 +10,7 @@ from sklearn.metrics import mean_absolute_error
 fastf1.Cache.enable_cache("cache_folder")
 
 # Load FastF1 2024 Australian GP race session
-session_2025 = fastf1.get_session(2025, 'Australia', 'R')
+session_2025 = fastf1.get_session(2025, 'China', 'R')
 session_2025.load()
 
 # Extract Lap times
@@ -20,8 +20,8 @@ laps_2025["LapTime (s)"] = laps_2025["LapTime"].dt.total_seconds()
 
 # Qualifying data
 qualifying_2026 = pd.DataFrame({
-    "Driver": ["RUS", "ANT", "HAD", "LEC", "PIA", "NOR", "HAM", "LAW", "LIN"],
-    "QualifyingTime (s)": [78.518, 78.811, 79.303, 79.327, 79.380, 79.475, 79.478, 79.994, 81.247]
+    "Driver": ["ANT", "RUS", "HAM", "LEC", "PIA", "NOR", "GAS", "VER", "HAD", "BEA"],
+    "QualifyingTime (s)": [92.064, 92.286, 92.415, 92.428, 92.550, 92.608, 92.873, 93.002, 93.121, 93.292]
 })
 
 merged_data = qualifying_2026.merge(laps_2025)
@@ -70,7 +70,7 @@ drivers = {
 }
 
 # Print final predictions
-print("\n🏁 Predicted 2025 Australian GP Winner 🏁\n")
+print("\n🏁 Predicted 2026 China GP Winner 🏁\n")
 
 # Add driver names
 qualifying_2026["DriverName"] = qualifying_2026["Driver"].map(lambda code: drivers.get(code, {}).get("DriverName", code))

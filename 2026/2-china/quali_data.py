@@ -8,7 +8,7 @@ os.makedirs(cache_folder, exist_ok=True)
 fastf1.Cache.enable_cache(cache_folder)
 
 # Load session data
-session = fastf1.get_session(2026, 'Australia', 'Q')
+session = fastf1.get_session(2026, 'China', 'Q')
 session.load(telemetry=False)
 #weather_data = session.laps.get_weather_data()
 
