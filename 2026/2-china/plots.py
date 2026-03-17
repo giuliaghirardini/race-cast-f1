@@ -1,13 +1,14 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-from timple.timedelta import strftimedelta
-
+import os
 import fastf1
 import fastf1.plotting
-from fastf1.core import Laps
+
 import numpy as np
+import pandas as pd
 import seaborn as sns
-import os
+import matplotlib.pyplot as plt
+
+from fastf1.core import Laps
+from timple.timedelta import strftimedelta
 
 ######################################################
 ### RACE SETTINGS

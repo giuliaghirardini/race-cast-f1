@@ -1,13 +1,20 @@
-import fastf1
-import pandas as pd
-import numpy as np
+import os
 import emoji
+import fastf1
+
+import numpy as np
+import pandas as pd
+
+from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_absolute_error
 
 # Enable FastF1 caching
 fastf1.Cache.enable_cache("cache_folder")
+
+# Path 
+path = os.path.dirname(os.path.abspath(__file__))
+quali_data_path = os.path.join(os.path.join(path, "data"), 'qualifying_times.json')
 
 # Load FastF1 2024 Australian GP race session
 session_2025 = fastf1.get_session(2025, 'China', 'R')
@@ -19,9 +26,13 @@ laps_2025.dropna(subset=["LapTime"], inplace=True)
 laps_2025["LapTime (s)"] = laps_2025["LapTime"].dt.total_seconds()
 
 # Qualifying data
+# Extract from json 
+quali_data = pd.read_json(quali_data_path)
+quali_data.rename(columns={'BestQualiTimeSeconds': 'QualifyingTime (s)'}, inplace=True)
+
 qualifying_2026 = pd.DataFrame({
-    "Driver": ["ANT", "RUS", "HAM", "LEC", "PIA", "NOR", "GAS", "VER", "HAD", "BEA"],
-    "QualifyingTime (s)": [92.064, 92.286, 92.415, 92.428, 92.550, 92.608, 92.873, 93.002, 93.121, 93.292]
+    "Driver": [quali_data['Driver'][i] for i in range(len(quali_data))],
+    "QualifyingTime (s)": [quali_data['QualifyingTime (s)'][i] for i in range(len(quali_data))]
 })
 
 merged_data = qualifying_2026.merge(laps_2025)
@@ -81,10 +92,10 @@ qualifying_2026.index = qualifying_2026.index + 1
 
 # Add medals for top 3
 medals = {1: emoji.emojize(":trophy:"), 2: "🥈", 3: "🥉"}
-qualifying_2026["Medal"] = qualifying_2026.index.map(lambda i: medals.get(i, ""))
+qualifying_2026[" "] = qualifying_2026.index.map(lambda i: medals.get(i, ""))
 
 # Print with medals
-print(qualifying_2026[["Driver", "DriverName", "PredictedRaceTime (s)", "Medal"]])
+print(qualifying_2026[["Driver", "DriverName", "PredictedRaceTime (s)", " "]])
 
 # Evaluate Model
 y_pred = model.predict(X_test)

@@ -2,10 +2,10 @@
 
 ## Circuit
 
-![china_circuit](../2-china/gpx/2026trackshanghaidetailed.avif)
+![china_circuit](gpx/2026trackshanghaidetailed.webp)
 *Source: https://www.formula1.com/en/racing/2026/china*
 
-![china_chircuit_map](../2-china/gpx/2026_china_circuit_map.png)
+![china_chircuit_map](gpx/2026_china_circuit_map.png)
 
 ## Plots
 
