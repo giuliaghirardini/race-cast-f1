@@ -1,13 +1,21 @@
-import fastf1
-import pandas as pd
-import numpy as np
+import os
 import emoji
+import fastf1
+
+import numpy as np
+import pandas as pd
+
+from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_absolute_error
+
 
 # Enable FastF1 caching
 fastf1.Cache.enable_cache("cache_folder")
+
+# Path 
+path = os.path.dirname(os.path.abspath(__file__))
+quali_data_path = os.path.join(os.path.join(path, "data"), 'qualifying_times.json')
 
 # Load FastF1 2025 Australian GP race session
 session_2025 = fastf1.get_session(2025, 'Australia', 'R')
@@ -19,9 +27,13 @@ laps_2025.dropna(subset=["LapTime"], inplace=True)
 laps_2025["LapTime (s)"] = laps_2025["LapTime"].dt.total_seconds()
 
 # Qualifying data
+# Extract from json 
+quali_data = pd.read_json(quali_data_path)
+quali_data.rename(columns={'BestQualiTimeSeconds': 'QualifyingTime (s)'}, inplace=True)
+
 qualifying_2026 = pd.DataFrame({
-    "Driver": ["RUS", "ANT", "HAD", "LEC", "PIA", "NOR", "HAM", "LAW", "LIN"],
-    "QualifyingTime (s)": [78.518, 78.811, 79.303, 79.327, 79.380, 79.475, 79.478, 79.994, 81.247]
+    "Driver": [quali_data['Driver'][i] for i in range(len(quali_data))],
+    "QualifyingTime (s)": [quali_data['QualifyingTime (s)'][i] for i in range(len(quali_data))]
 })
 
 merged_data = qualifying_2026.merge(laps_2025)
