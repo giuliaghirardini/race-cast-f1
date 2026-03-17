@@ -1,6 +1,9 @@
 #!/bin/bash
 
-BASE="https://www.formula1.com/etc/designs/fom-website/images/racing/2026"
+# BASE="https://www.formula1.com/etc/designs/fom-website/images/racing/2026"
+
+# Alternative: Download from media.formula1.com instead
+BASE="https://media.formula1.com/image/upload/c_fit,h_704/q_auto/v1740000001/common/f1/2026/track"
 
 countries=(
     "australia"
@@ -56,16 +59,30 @@ cities=(
     abudhabi
 )
 
+echo "Downloading track images for 2026 F1 season..."
 for i in "${!countries[@]}"; do
 
     num=$((i+1))
     folder="${num}-${countries[$i]}"
     city="${cities[$i]}"
 
-    img="2026track${city}detailed.avif"
+    # img="2026track${city}detailed.avif"
+    img="2026track${city}detailed.webp"
 
     echo "Downloading $img -> $folder"
 
     curl -L "$BASE/$img" -o "$folder/$img"
+
+done
+
+echo "Deleting avif files if they exist..."
+for i in "${!countries[@]}"; do
+
+    num=$((i+1))
+    folder="${num}-${countries[$i]}"
+    city="${cities[$i]}"
+
+    echo "Deleting $img -> $folder"
+    rm -f "$folder/2026track${city}detailed.avif"
 
 done
