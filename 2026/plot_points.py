@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 
 from collections import defaultdict
 
+################################################################
 # USER SETTINGS
+################################################################
 
 num_gp = 2  # scalable
 
@@ -19,12 +21,13 @@ num_gp = 2  # scalable
 
 # Set up for json output
 path = os.path.dirname(os.path.abspath(__file__))
+path_gpx = os.path.join(path, "gpx")
 print(f"\nBase path is: {path}")
 content = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
 print(content)
 
 # reorder content
-content = sorted(content, key=lambda x: int(x.split('-')[0]))
+content = sorted([f for f in content if f != "gpx"], key=lambda x: int(x.split('-')[0]))
 print(f"\nReordered content: {content}")
 
 ################################################################
@@ -145,7 +148,7 @@ plt.grid(True)
 
 plt.tight_layout()
 
-save_path = os.path.join(path, "points_progression.png")
+save_path = os.path.join(path_gpx, "points_progression.png")
 plt.savefig(save_path, dpi=300, bbox_inches='tight')
 print(f"\nPoints progression plot saved to {save_path}")
 
@@ -201,7 +204,7 @@ plt.ylabel("Driver")
 
 plt.tight_layout()
 
-save_path = os.path.join(path, "points_thermal_map.png")
+save_path = os.path.join(path_gpx, "points_thermal_map.png")
 plt.savefig(save_path, dpi=300, bbox_inches='tight')
 print(f"\nPoints thermal map saved to {save_path}")
 
@@ -209,12 +212,12 @@ print(f"\nPoints thermal map saved to {save_path}")
 # PLOT CONSTRUCTOR POINTS
 ################################################################
 
-# --- Map driver -> team using your existing session ---
+# Map driver -> team using your existing session
 driver_team = {}
 for _, row in session.results.iterrows():
     driver_team[row["Abbreviation"]] = row["TeamName"]
 
-# --- Aggregate constructor points ---
+# Aggregate constructor points
 constructors_points = defaultdict(float)
 
 for i in range(1, num_gp + 1):
@@ -231,20 +234,20 @@ for i in range(1, num_gp + 1):
         if team:  # safety check
             constructors_points[team] += pts
 
-# --- Convert to sorted lists ---
+# Convert to sorted lists
 teams = list(constructors_points.keys())
 points = list(constructors_points.values())
 
 # Sort by points descending
 teams, points = zip(*sorted(zip(teams, points), key=lambda x: x[1], reverse=True))
 
-# --- Colors (FastF1 style) ---
+# Colors (FastF1 style)
 colors = [
     fastf1.plotting.get_team_color(team, session=session)
     for team in teams
 ]
 
-# --- Plot ---
+# Plot
 plt.figure(figsize=(10, 6))
 
 plt.bar(teams, points, color=colors, edgecolor="black")
@@ -258,6 +261,6 @@ plt.grid(axis="y", linestyle="--", alpha=0.5)
 
 plt.tight_layout()
 
-save_path = os.path.join(path, "constructor_points.png")
+save_path = os.path.join(path_gpx, "constructor_points.png")
 plt.savefig(save_path, dpi=300, bbox_inches='tight')
 print(f"\nConstructor points plot saved to {save_path}")
