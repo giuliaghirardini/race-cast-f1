@@ -80,6 +80,6 @@ With FIA regulations for 2026, there are no DRS zones anymore, but there are new
 
 ## Plots
 ![australia_position_changes](gpx/2026_australia_position_changes.png)
+![australia_tyre_strategy](gpx/2026_australia_tyre_strategy.png)
 ![australia_qualifying_results](gpx/2026_australia_qualifying_results.png)
 ![australia_team_pace_comparison](gpx/2026_australia_team_pace_comparison.png)
-![australia_tyre_strategy](gpx/2026_australia_tyre_strategy.png)
