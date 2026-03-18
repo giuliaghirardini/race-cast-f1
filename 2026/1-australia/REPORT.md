@@ -2,11 +2,38 @@
 
 ## General information
 **Round 1 - Melbourne Grand Prix Circuit, Melbourne**  
-**Date:** 8 March 2026
+
+Here are the general details of the first round of the 2026 Formula 1 season, held at the Melbourne Grand Prix Circuit in Melbourne, Australia:
+* **Number of laps:** 58
+* **Circuit length:** 5,303 km
+* **Race distance:** 307,574 km
+
+Here is a minimal image of the circuit layout with the location and the number of the corners:
+![australia_circuit_minimal](gpx/2026_australia_circuit_map.png)
+
+### Weekend schedule
+The weekend schedule for the Melbourne Grand Prix Circuit was as follows:
+* **Practice 1:** 6 March, 12:30 PM - 13:30 PM
+* **Practice 2:** 6 March, 16:00 PM - 17:00 PM
+* **Practice 3:** 7 March, 12:30 PM - 13:30 PM
+* **Qualifying:** 7 March, 16:00 PM - 17:00 PM
+* **Race:** 8 March, 15:00 PM
+
 
 ## Circuit
 
-![australia_circuit](gpx/2026trackmelbournedetailed.avif)
+The Race Park circuit Melbourne is 5,303 km long, with a total race distance of 307,574 km. 
+
+The circuit is divided into 3 sectors, 14 corners, 5 Straight Mode Zones. Before corner 1 there is a Speed Trap Zone; then, between corner 13 and 14 there are the Overtake Detection and the Overtake Activation.
+
+With FIA regulations for 2026, there are no DRS zones anymore, but there are new features that are designed to promote overtaking. These are:
+
+*  **Speed Trap Zone**: which is used to measure the top speed of the cars.
+*  **Straight Mode Zones**: which are used to allow the cars to use their maximum power for a short period of time, usually on the straights.
+*  **Overtake Detection**: which is used to detect when a car is attempting to overtake another car.
+*  **Overtake Activation**: which is used to allow the cars to use their maximum power for a short period of time, usually when attempting to overtake another car.
+  
+![australia_circuit](gpx/2026trackmelbournedetailed.webp)
 *Source: https://www.formula1.com/en/racing/2026/australia*
 
 ## Prediction
@@ -51,11 +78,8 @@
 | Oscar Piastri   | McLaren |
 | Nico Hülkenberg | Audi    |
 
-### Key Takeaways
-
-- **Mercedes** begins the season with a strong 1–2 finish.  
-- **Andrea Kimi Antonelli** impresses with a podium on debut.  
-- **Ferrari** shows competitive race pace with Leclerc and Hamilton finishing P3–P4.  
-- **Aston Martin** suffers a difficult start with both cars retiring.
-
 ## Plots
+![australia_position_changes](gpx/2026_australia_position_changes.png)
+![australia_qualifying_results](gpx/2026_australia_qualifying_results.png)
+![australia_team_pace_comparison](gpx/2026_australia_team_pace_comparison.png)
+![australia_tyre_strategy](gpx/2026_australia_tyre_strategy.png)

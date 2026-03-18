@@ -78,6 +78,7 @@ plt.tight_layout()
 # Save plot
 plot_path = os.path.join(gpx_path, string_race+"_position_changes.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nPosition changes plot saved to {plot_path}")
 
 ######################################################
 ### QUALIFYING RESULTS OVERVIEW
@@ -127,116 +128,102 @@ plt.suptitle(f"{quali_session.event['EventName']} {quali_session.event.year} Qua
 # Save plot
 plot_path = os.path.join(gpx_path, string_race+"_qualifying_results.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nQualifying results plot saved to {plot_path}")
 
 ######################################################
 ### CIRCUIT
 ######################################################
+
+fig, ax = plt.subplots(figsize=(10, 10)) # Create new fig to avoid overlap
 
 def rotate(xy, *, angle):
     rot_mat = np.array([[np.cos(angle), np.sin(angle)],
                         [-np.sin(angle), np.cos(angle)]])
     return np.matmul(xy, rot_mat)
 
-# Get an array of shape [n, 2] where n is the number of points and the second
-# axis is x and y.
 track = pos.loc[:, ('X', 'Y')].to_numpy()
-
-# Convert the rotation angle from degrees to radian.
 track_angle = circuit_info.rotation / 180 * np.pi
-
-# Rotate and plot the track map.
 rotated_track = rotate(track, angle=track_angle)
-plt.plot(rotated_track[:, 0], rotated_track[:, 1])
 
-offset_vector = [500, 0]  # offset length is chosen arbitrarily to 'look good'
+ax.plot(rotated_track[:, 0], rotated_track[:, 1], linestyle='-', linewidth=3)
 
-# Iterate over all corners.
+offset_vector = [500, 0] 
+
 for _, corner in circuit_info.corners.iterrows():
-    # Create a string from corner number and letter
     txt = f"{corner['Number']}{corner['Letter']}"
-
-    # Convert the angle from degrees to radian.
     offset_angle = corner['Angle'] / 180 * np.pi
-
-    # Rotate the offset vector so that it points sideways from the track.
     offset_x, offset_y = rotate(offset_vector, angle=offset_angle)
-
-    # Add the offset to the position of the corner
-    text_x = corner['X'] + offset_x
-    text_y = corner['Y'] + offset_y
-
-    # Rotate the text position equivalently to the rest of the track map
-    text_x, text_y = rotate([text_x, text_y], angle=track_angle)
-
-    # Rotate the center of the corner equivalently to the rest of the track map
+    
+    text_x, text_y = rotate([corner['X'] + offset_x, corner['Y'] + offset_y], angle=track_angle)
     track_x, track_y = rotate([corner['X'], corner['Y']], angle=track_angle)
 
-    # Draw a circle next to the track.
-    plt.scatter(text_x, text_y, color='grey', s=140)
+    ax.scatter(text_x, text_y, color='grey', s=140)
+    ax.plot([track_x, text_x], [track_y, text_y], color='grey')
+    ax.text(text_x, text_y, txt, va='center_baseline', ha='center', size='small', color='white')
 
-    # Draw a line from the track to this circle.
-    plt.plot([track_x, text_x], [track_y, text_y], color='grey')
+ax.set_title(f"{quali_session.event['Location']} Circuit Map")
+ax.axis('off') # Cleaner look for maps
+ax.set_aspect('equal')
 
-    # Finally, print the corner number inside the circle.
-    plt.text(text_x, text_y, txt,
-             va='center_baseline', ha='center', size='small', color='white')
-    
-plt.title(quali_session.event['Location'])
-plt.axis('equal')
-
-# Save plot
 plot_path = os.path.join(gpx_path, string_race+"_circuit_map.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nCircuit map plot saved to {plot_path}")
 
 ######################################################
 ### TYRE STRATEGY DURING THE RACE
 ######################################################
 
-drivers = [race_session.get_driver(driver)["Abbreviation"] for driver in race_session.drivers]
-
+# Prepare stint data
 stints = laps[["Driver", "Stint", "Compound", "LapNumber"]]
-stints = stints.groupby(["Driver", "Stint", "Compound"])
-stints = stints.count().reset_index()
-
+stints = stints.groupby(["Driver", "Stint", "Compound"]).count().reset_index()
 stints = stints.rename(columns={"LapNumber": "StintLength"})
 
-fig, ax = plt.subplots(figsize=(5, 10))
+# Order drivers by finishing position
+drivers = [race_session.get_driver(d)["Abbreviation"] for d in race_session.drivers]
 
-for driver in race_session.drivers:
+fig, ax = plt.subplots(figsize=(6, 10))
+
+for driver in drivers:
     driver_stints = stints.loc[stints["Driver"] == driver]
 
     previous_stint_end = 0
-    for idx, row in driver_stints.iterrows():
-        # each row contains the compound name and stint length
-        # we can use these information to draw horizontal bars
-        compound_color = fastf1.plotting.get_compound_color(row["Compound"],
-                                                            session=race_session)
-        plt.barh(
+    for _, row in driver_stints.iterrows():
+        compound_color = fastf1.plotting.get_compound_color(
+            row["Compound"],
+            session=race_session
+        )
+
+        ax.barh(
             y=driver,
             width=row["StintLength"],
             left=previous_stint_end,
             color=compound_color,
             edgecolor="black",
-            fill=True
+            height=0.8
         )
 
         previous_stint_end += row["StintLength"]
 
-plt.title(str(year)+race_name+" Grand Prix Tyre Strategies")
-plt.xlabel("Lap Number")
-plt.grid(False)
-# invert the y-axis so drivers that finish higher are closer to the top
+# Titles and labels
+ax.set_title(f"{year} {race_name} Grand Prix Tyre Strategies")
+ax.set_xlabel("Lap Number")
+
+# Best finishing drivers at the top
 ax.invert_yaxis()
 
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_visible(False)
+# Clean aesthetics
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.spines["left"].set_visible(False)
+
+ax.grid(False)
 
 plt.tight_layout()
 
 # Save plot
-plot_path = os.path.join(gpx_path, string_race+"_tyre_strategy.png")
-fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+plot_path = os.path.join(gpx_path, string_race + "_tyre_strategy.png")
+fig.savefig(plot_path, dpi=300, bbox_inches="tight")
+print(f"\nTyre strategy plot saved to {plot_path}")
 
 ##########################################################
 ### TEAM PACE COMPARISON
@@ -245,18 +232,13 @@ fig.savefig(plot_path, dpi=300, bbox_inches='tight')
 transformed_laps = laps.copy()
 transformed_laps.loc[:, "LapTime (s)"] = laps["LapTime"].dt.total_seconds()
 
-# order the team from the fastest (lowest median lap time) tp slower
-team_order = (
-    transformed_laps[["Team", "LapTime (s)"]]
-    .groupby("Team")
-    .median()["LapTime (s)"]
-    .sort_values()
-    .index
-)
+# Filter out extreme outliers for better visualization
+transformed_laps = transformed_laps.loc[transformed_laps['LapTime (s)'] < transformed_laps['LapTime (s)'].min() * 1.07]
 
-# make a color palette associating team names to hex codes
-team_palette = {team: fastf1.plotting.get_team_color(team, session=race_session)
-                for team in team_order}
+team_order = (transformed_laps[["Team", "LapTime (s)"]].groupby("Team")
+              .median()["LapTime (s)"].sort_values().index)
+
+team_palette = {team: fastf1.plotting.get_team_color(team, session=race_session) for team in team_order}
 
 fig, ax = plt.subplots(figsize=(15, 10))
 sns.boxplot(
@@ -272,13 +254,11 @@ sns.boxplot(
     capprops=dict(color="white"),
 )
 
-plt.title(str(year)+race_name+" Team Pace Comparison")
-plt.grid(visible=False)
-
-# x-label is redundant
-ax.set(xlabel=None)
+ax.set_title(f"{year} {race_name} Team Pace Comparison")
+ax.set_xlabel(None)
+plt.xticks(rotation=45)
 plt.tight_layout()
 
-# Save plot
 plot_path = os.path.join(gpx_path, string_race+"_team_pace_comparison.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nTeam pace comparison plot saved to {plot_path}")
