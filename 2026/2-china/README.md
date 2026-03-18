@@ -10,6 +10,6 @@
 ## Plots
 
 ![china_position_changes](gpx/2026_china_position_changes.png)
+![china_tyre_strategy](gpx/2026_china_tyre_strategy.png)
 ![china_qualifying_results](gpx/2026_china_qualifying_results.png)
 ![china_team_pace_comparison](gpx/2026_china_team_pace_comparison.png)
-![china_tyre_strategy](gpx/2026_china_tyre_strategy.png)

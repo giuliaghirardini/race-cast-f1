@@ -19,9 +19,11 @@ year = 2026
 string_race = "2026_china"
 
 ### Load session data
+# Race session
 race_session = fastf1.get_session(year, race_name, 'R')
 race_session.load(telemetry=False, weather=False)
 
+# Qualifying session
 quali_session = fastf1.get_session(year, race_name, 'Q')
 quali_session.load()
 
@@ -43,22 +45,29 @@ gpx_path = os.path.join(path, "gpx")
 ### POSITION CHANGES DURING THE RACE
 ######################################################
 
+# Load FastF1's dark color scheme
 fastf1.plotting.setup_mpl(mpl_timedelta_support=False, color_scheme='fastf1')
 
+# Plot
 fig, ax = plt.subplots(figsize=(10, 6))
 
 for drv in race_session.drivers:
-    # UPDATED: Changed pick_driver to pick_drivers
     drv_laps = race_session.laps.pick_drivers(drv)
+
     if not drv_laps.empty:
         abb = drv_laps['Driver'].iloc[0]
-        style = fastf1.plotting.get_driver_style(identifier=abb,
-                                                 style=['color', 'linestyle'],
-                                                 session=race_session)
-        ax.plot(drv_laps['LapNumber'], drv_laps['Position'], label=abb, **style)
+    else:
+        print("No laps found for this driver")
+    
+    style = fastf1.plotting.get_driver_style(identifier=abb,
+                                             style=['color', 'linestyle'],
+                                             session=race_session)
 
+    ax.plot(drv_laps['LapNumber'], drv_laps['Position'],
+            label=abb, **style)
+    
 ax.set_ylim([20.5, 0.5])
-ax.set_yticks(range(1, 21))
+ax.set_yticks([1, 5, 10, 15, 20])
 ax.set_xlabel('Lap')
 ax.set_ylabel('Position')
 ax.set_title(f"{race_session.event['EventName']} {year} - Position Changes")
@@ -66,43 +75,61 @@ ax.set_title(f"{race_session.event['EventName']} {year} - Position Changes")
 ax.legend(bbox_to_anchor=(1.0, 1.02), loc='upper left')
 plt.tight_layout()
 
+# Save plot
 plot_path = os.path.join(gpx_path, string_race+"_position_changes.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nPosition changes plot saved to {plot_path}")
 
 ######################################################
 ### QUALIFYING RESULTS OVERVIEW
 ######################################################
 
+# Enable Matplotlib patches for plotting timedelta values
 fastf1.plotting.setup_mpl(mpl_timedelta_support=True, color_scheme=None)
 
+list_fastest_laps = list()
 list_fastest_laps = []
+
 for drv in drivers:
-    # UPDATED: Changed pick_driver to pick_drivers
+    
     drv_laps = quali_session.laps.pick_drivers(drv).pick_quicklaps()
-    if not drv_laps.empty:
-        list_fastest_laps.append(drv_laps.pick_fastest())
+    drv_fastest = drv_laps.pick_fastest()
+
+    if drv_fastest is not None:
+        list_fastest_laps.append(drv_fastest)
 
 fastest_laps = Laps(list_fastest_laps).sort_values(by='LapTime').reset_index(drop=True)
+
 pole_lap = fastest_laps.pick_fastest()
 fastest_laps['LapTimeDelta'] = fastest_laps['LapTime'] - pole_lap['LapTime']
 
-team_colors = [fastf1.plotting.get_team_color(lap['Team'], session=quali_session) 
-               for _, lap in fastest_laps.iterlaps()]
+team_colors = list()
+for index, quali_laps in fastest_laps.iterlaps():
+    color = fastf1.plotting.get_team_color(quali_laps['Team'], session=quali_session)
+    team_colors.append(color)
 
-fig, ax = plt.subplots(figsize=(10, 8))
-ax.barh(fastest_laps.index, fastest_laps['LapTimeDelta'], color=team_colors, edgecolor='grey')
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.barh(fastest_laps.index, fastest_laps['LapTimeDelta'],
+        color=team_colors, edgecolor='grey')
 ax.set_yticks(fastest_laps.index)
 ax.set_yticklabels(fastest_laps['Driver'])
+
+# show fastest at the top
 ax.invert_yaxis()
+
+# draw vertical lines behind the bars
 ax.set_axisbelow(True)
 ax.xaxis.grid(True, which='major', linestyle='--', color='black', alpha=0.3)
 
 lap_time_string = strftimedelta(pole_lap['LapTime'], '%m:%s.%ms')
+
 plt.suptitle(f"{quali_session.event['EventName']} {quali_session.event.year} Qualifying\n"
              f"Fastest Lap: {lap_time_string} ({pole_lap['Driver']})")
 
+# Save plot
 plot_path = os.path.join(gpx_path, string_race+"_qualifying_results.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nQualifying results plot saved to {plot_path}")
 
 ######################################################
 ### CIRCUIT MAP
@@ -139,8 +166,10 @@ ax.set_title(f"{quali_session.event['Location']} Circuit Map")
 ax.axis('off') # Cleaner look for maps
 ax.set_aspect('equal')
 
+# Save plot
 plot_path = os.path.join(gpx_path, string_race+"_circuit_map.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nCircuit map plot saved to {plot_path}")
 
 ######################################################
 ### TYRE STRATEGY
@@ -154,7 +183,7 @@ stints = stints.rename(columns={"LapNumber": "StintLength"})
 # Order drivers by finishing position
 drivers = [race_session.get_driver(d)["Abbreviation"] for d in race_session.drivers]
 
-fig, ax = plt.subplots(figsize=(6, 10))
+fig, ax = plt.subplots(figsize=(10, 6))
 
 for driver in drivers:
     driver_stints = stints.loc[stints["Driver"] == driver]
@@ -190,12 +219,18 @@ ax.spines["right"].set_visible(False)
 ax.spines["left"].set_visible(False)
 
 ax.grid(False)
+ax.legend(handles=[
+    plt.Line2D([0], [0], color=fastf1.plotting.get_compound_color("SOFT", session=race_session), lw=4, label="Soft"),
+    plt.Line2D([0], [0], color=fastf1.plotting.get_compound_color("MEDIUM", session=race_session), lw=4, label="Med"),
+    plt.Line2D([0], [0], color=fastf1.plotting.get_compound_color("HARD", session=race_session), lw=4, label="Hard"),
+], bbox_to_anchor=(1.0, 1.02))
 
 plt.tight_layout()
 
 # Save plot
 plot_path = os.path.join(gpx_path, string_race + "_tyre_strategy.png")
 fig.savefig(plot_path, dpi=300, bbox_inches="tight")
+print(f"\nTyre strategy plot saved to {plot_path}")
 
 ##########################################################
 ### TEAM PACE COMPARISON
@@ -212,7 +247,7 @@ team_order = (transformed_laps[["Team", "LapTime (s)"]].groupby("Team")
 
 team_palette = {team: fastf1.plotting.get_team_color(team, session=race_session) for team in team_order}
 
-fig, ax = plt.subplots(figsize=(15, 10))
+fig, ax = plt.subplots(figsize=(10, 6))
 sns.boxplot(
     data=transformed_laps,
     x="Team",
@@ -233,3 +268,4 @@ plt.tight_layout()
 
 plot_path = os.path.join(gpx_path, string_race+"_team_pace_comparison.png")
 fig.savefig(plot_path, dpi=300, bbox_inches='tight')
+print(f"\nTeam pace comparison plot saved to {plot_path}")
