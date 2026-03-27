@@ -4,7 +4,7 @@
 - [Results report and analysis](#results-report-and-analysis)
   - [Table of contents](#table-of-contents)
   - [General information](#general-information)
-    - [Round 1 - Melbourne Grand Prix Circuit, Melbourne](#round-1---melbourne-grand-prix-circuit-melbourne)
+    - [Round 1 - Albert Park Grand Prix Circuit, Melbourne](#round-1---albert-park-grand-prix-circuit-melbourne)
     - [Weekend schedule](#weekend-schedule)
   - [Circuit](#circuit)
   - [Prediction](#prediction)
@@ -19,9 +19,9 @@
     - [Team pace comparison](#team-pace-comparison)
 
 ## General information
-### Round 1 - Melbourne Grand Prix Circuit, Melbourne
+### Round 1 - Albert Park Grand Prix Circuit, Melbourne
 
-Here are the general details of the first round of the 2026 Formula 1 season, held at the Melbourne Grand Prix Circuit in Melbourne, Australia:
+Here are the general details of the first round of the 2026 Formula 1 season, held at the Albert Park Grand Prix Circuit in Melbourne, Australia:
 * **Number of laps:** 58
 * **Circuit length:** 5,303 km
 * **Race distance:** 307,574 km
@@ -42,7 +42,7 @@ The weekend schedule for the Melbourne Grand Prix Circuit was as follows:
 
 The Race Park circuit Melbourne is 5,303 km long, with a total race distance of 307,574 km. 
 
-The circuit is divided into 3 sectors, 14 corners, 5 Straight Mode Zones. Before corner 1 there is a Speed Trap Zone; then, between corner 13 and 14 there are the Overtake Detection and the Overtake Activation.
+The circuit is divided into **3 sectors**, **14 corners**, **5 Straight Mode Zones**. Before corner 1 there is a Speed Trap Zone; then, between corner 13 and 14 there are the Overtake Detection and the Overtake Activation.
 
 With FIA regulations for 2026, there are no DRS zones anymore, but there are new features that are designed to promote overtaking. These are:
 
@@ -55,7 +55,7 @@ With FIA regulations for 2026, there are no DRS zones anymore, but there are new
 *Source: https://www.formula1.com/en/racing/2026/australia*
 
 ## Prediction
-
+[WORK IN PROGRESS]
 
 ## Results
 
