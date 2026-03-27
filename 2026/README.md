@@ -44,7 +44,7 @@ This table below will be filled with the winner of each GP. In addiction to this
 ### Cumulative graph of points
 This graph will be updated after each race to show the progression of the championship battle throughout the season. It will display the cumulative points for each driver after each Grand Prix, allowing us to visualize how the standings evolve over time.
 
-![cumulative_points_graph](points_progression.png)
+![cumulative_points_graph](gpx/points_progression.png)
 
 ### Victory Tally
 
@@ -65,7 +65,7 @@ George Russell and Andrea Kimi Antonelli are showing a strong performance, leadi
 
 Together with the points tally, below a thermal map of the points distribution among the drivers is shown, with the top 10 drivers highlighted.
 
-![points_thermal_map](points_thermal_map.png)
+![points_thermal_map](gpx/points_thermal_map.png)
 
 ## Teams and drivers
 
@@ -87,4 +87,4 @@ The 2026 grid features a mix of experienced champions and emerging new talents. 
 
 Here below a graph showing the constructor points distribution for the teams. This graph will be updated after each race.
 
-![constructor_points_distribution](constructor_points.png)
+![constructor_points_distribution](gpx/constructor_points.png)
