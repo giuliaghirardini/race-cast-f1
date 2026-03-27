@@ -1,7 +1,25 @@
 # Results report and analysis
 
+## Table of contents
+- [Results report and analysis](#results-report-and-analysis)
+  - [Table of contents](#table-of-contents)
+  - [General information](#general-information)
+    - [Round 1 - Melbourne Grand Prix Circuit, Melbourne](#round-1---melbourne-grand-prix-circuit-melbourne)
+    - [Weekend schedule](#weekend-schedule)
+  - [Circuit](#circuit)
+  - [Prediction](#prediction)
+  - [Results](#results)
+    - [Points](#points)
+    - [Retirements](#retirements)
+    - [Did Not Start](#did-not-start)
+  - [Plots](#plots)
+    - [Position changes during the race](#position-changes-during-the-race)
+    - [Tyre strategy](#tyre-strategy)
+    - [Qualifying results](#qualifying-results)
+    - [Team pace comparison](#team-pace-comparison)
+
 ## General information
-**Round 1 - Melbourne Grand Prix Circuit, Melbourne**  
+### Round 1 - Melbourne Grand Prix Circuit, Melbourne
 
 Here are the general details of the first round of the 2026 Formula 1 season, held at the Melbourne Grand Prix Circuit in Melbourne, Australia:
 * **Number of laps:** 58
@@ -9,6 +27,7 @@ Here are the general details of the first round of the 2026 Formula 1 season, he
 * **Race distance:** 307,574 km
 
 Here is a minimal image of the circuit layout with the location and the number of the corners:
+
 ![australia_circuit_minimal](gpx/2026_australia_circuit_map.png)
 
 ### Weekend schedule
@@ -18,7 +37,6 @@ The weekend schedule for the Melbourne Grand Prix Circuit was as follows:
 * **Practice 3:** 7 March, 12:30 PM - 13:30 PM
 * **Qualifying:** 7 March, 16:00 PM - 17:00 PM
 * **Race:** 8 March, 15:00 PM
-
 
 ## Circuit
 
@@ -79,7 +97,11 @@ With FIA regulations for 2026, there are no DRS zones anymore, but there are new
 | Nico Hülkenberg | Audi    |
 
 ## Plots
+### Position changes during the race
 ![australia_position_changes](gpx/2026_australia_position_changes.png)
+### Tyre strategy
 ![australia_tyre_strategy](gpx/2026_australia_tyre_strategy.png)
+### Qualifying results
 ![australia_qualifying_results](gpx/2026_australia_qualifying_results.png)
+### Team pace comparison
 ![australia_team_pace_comparison](gpx/2026_australia_team_pace_comparison.png)
