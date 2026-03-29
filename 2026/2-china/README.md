@@ -29,7 +29,28 @@
 ![china_chircuit_map](gpx/2026_china_circuit_map.png)
 
 ## Prediction
-[WORK IN PROGRESS]
+The prediction model was developed using an **XGBoost Regressor** trained on data from the 2025 Japanese Grand Prix. The target variable is the **delta between race lap times and qualifying lap times**, focusing on degradation effects from fuel, tyres, and weather. 
+
+**Key features** include qualifying time (`QualiTime_s`), lap number (`LapNumber`), tyre life (`TyreLife`), tyre compound encoded as an ID (`Compound_Id`), and **engineered variables**: fuel burn effect (`Fuel_Burn_Effect`, linear weight reduction over laps), tyre stress (`Tyre_Stress`, exponential degradation for high-speed tracks), and track-wind interaction (`Track_Wind_Interaction`, product of track temperature and wind speed). 
+
+Additional **weather features** such as track temperature (`TrackTemp`), air temperature (`AirTemp`), wind speed (`WindSpeed`), and wind gust (`WindGust`) were incorporated where available. 
+
+The model was trained with parameters including **2000 estimators**, a **learning rate of 0.008**, **max depth of 5**, and regularization to prevent overfitting, achieving a mean absolute error (MAE) of 0.5050 seconds on the validation set.
+
+| Position | Driver | Predicted Race Lap |
+| -------- | ------ | ------------------ |
+| 1st      | RUS    | 96.259809          |
+| 2nd      | HAM    | 96.348601          |
+| 3rd      | PIA    | 96.445091          |
+| 4th      | LEC    | 96.457768          |
+| 5th      | NOR    | 96.532887          |
+| 6th      | ANT    | 96.620587          |
+| 7th      | VER    | 96.772265          |
+| 8th      | HAD    | 96.891265          |
+| 9th      | GAS    | 96.964863          |
+| 10th     | BEA    | 97.062265          |
+
+**Model Performance:** MAE (Mean Absolute Error) = 0.5050s
 
 ## Results
 ### Points
