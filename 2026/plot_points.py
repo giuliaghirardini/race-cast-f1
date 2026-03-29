@@ -13,7 +13,7 @@ from collections import defaultdict
 # USER SETTINGS
 ################################################################
 
-num_gp = 2  # scalable
+num_gp = 3  # scalable
 
 ################################################################
 # PATH AND DATA LOADING

@@ -12,13 +12,13 @@ Here are shown some general informations about the season:
 
 This section will be updated weekly with the results of each Grand Prix, including the winner and cumulative points for Drivers.
 
-This table below will be filled with the winner of each GP. In addiction to this, a cumulative points graph will br e added to show the progression of the championship battle throughout the season.
+This table below will be filled with the winner of each GP. In addiction to this, a cumulative points graph will be added to show the progression of the championship battle throughout the season.
 
 | Round | Grand Prix          | Date        | Winner    |
 | :---- | :------------------ | :---------- | :-------- |
 | 1     | Australian GP       | 08 Mar 2026 | Russel    |
 | 2     | Chinese GP          | 15 Mar 2026 | Antonelli |
-| 3     | Japanese GP         | 29 Mar 2026 | TBD       |
+| 3     | Japanese GP         | 29 Mar 2026 | Antonelli |
 | 4     | Bahrain GP          | 12 Apr 2026 | TBD       |
 | 5     | Saudi Arabian GP    | 19 Apr 2026 | TBD       |
 | 6     | Miami GP            | 03 May 2026 | TBD       |
@@ -52,13 +52,15 @@ This table below shows the cumulative points for few selected drivers. it will b
 
 | Driver                | Team     | Points |
 | --------------------- | -------- | ------ |
-| George Russell        | Mercedes | 51     |
-| Andrea Kimi Antonelli | Mercedes | 47     |
-| Charles Leclerc       | Ferrari  | 34     |
-| Lewis Hamilton        | Ferrari  | 33     |
-| Lando Norris          | McLaren  | 15     |
-| Max Verstappen        | Red Bull | 8      |
-| Oscar Piastri         | McLaren  | 3      |
+| Andrea Kimi Antonelli | Mercedes | 72     |
+| George Russell        | Mercedes | 63     |
+| Charles Leclerc       | Ferrari  | 49     |
+| Lewis Hamilton        | Ferrari  | 41     |
+| Lando Norris          | McLaren  | 25     |
+| Oscar Piastri         | McLaren  | 21     |
+| Max Verstappen        | Red Bull | 12     |
+| Isack Hadjar          | Red Bull | 4      |
+
 
 With respect to last season, due to the changing FIA regulations, Max Verstappen is not been able to dominate the championship as he did in the previous years. Also Oscar Piastri and Lando Norris, who dominated the 2025 season, with a strong McLaren car, have not been able to keep up with the pace of the Mercedes and Ferrari cars.
 George Russell and Andrea Kimi Antonelli are showing a strong performance, leading the championship battle. Charles Leclerc and Lewis Hamilton are also closely following, making the 2026 season highly competitive and exciting to watch.
