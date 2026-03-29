@@ -1,0 +1,52 @@
+[
+    {
+        "Driver": "ANT",
+        "DriverNumber": 12,
+        "BestQualiTimeSeconds": 88.778
+    },
+    {
+        "Driver": "RUS",
+        "DriverNumber": 63,
+        "BestQualiTimeSeconds": 89.076
+    },
+    {
+        "Driver": "PIA",
+        "DriverNumber": 81,
+        "BestQualiTimeSeconds": 89.132
+    },
+    {
+        "Driver": "LEC",
+        "DriverNumber": 16,
+        "BestQualiTimeSeconds": 89.405
+    },
+    {
+        "Driver": "NOR",
+        "DriverNumber": 1,
+        "BestQualiTimeSeconds": 89.409
+    },
+    {
+        "Driver": "HAM",
+        "DriverNumber": 44,
+        "BestQualiTimeSeconds": 89.567
+    },
+    {
+        "Driver": "GAS",
+        "DriverNumber": 10,
+        "BestQualiTimeSeconds": 89.691
+    },
+    {
+        "Driver": "HAD",
+        "DriverNumber": 6,
+        "BestQualiTimeSeconds": 89.978
+    },
+    {
+        "Driver": "BOR",
+        "DriverNumber": 5,
+        "BestQualiTimeSeconds": 90.274
+    },
+    {
+        "Driver": "LIN",
+        "DriverNumber": 41,
+        "BestQualiTimeSeconds": 90.319
+    }
+]

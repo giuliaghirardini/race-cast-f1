@@ -15,7 +15,6 @@ fastf1.Cache.enable_cache("cache_folder")
 # Path 
 path = os.path.dirname(os.path.abspath(__file__))
 quali_data_path = os.path.join(os.path.join(path, "data"), 'qualifying_times.json')
-quali_sprint_data_path = os.path.join(os.path.join(path, "data"), 'qualifying_sprint_times.json')
 
 # Load FastF1 2025 Australian GP race session
 session_2025 = fastf1.get_session(2025, 'Japan', 'R')
@@ -30,13 +29,10 @@ laps_2025["LapTime (s)"] = laps_2025["LapTime"].dt.total_seconds()
 # Extract from json 
 quali_data = pd.read_json(quali_data_path)
 quali_data.rename(columns={'BestQualiTimeSeconds': 'QualifyingTime (s)'}, inplace=True)
-quali_sprint_data = pd.read_json(quali_sprint_data_path)
-quali_sprint_data.rename(columns={'BestQualiTimeSeconds': 'QualifyingTime (s)'}, inplace=True)
 
 qualifying_2026 = pd.DataFrame({
     "Driver": [quali_data['Driver'][i] for i in range(len(quali_data))],
-    "QualifyingTime (s)": [quali_data['QualifyingTime (s)'][i] for i in range(len(quali_data))],
-    "SprintQualifyingTime (s)": [quali_sprint_data['QualifyingTime (s)'][i] for i in range(len(quali_sprint_data))]
+    "QualifyingTime (s)": [quali_data['QualifyingTime (s)'][i] for i in range(len(quali_data))]
 })
 
 merged_data = qualifying_2026.merge(laps_2025)
